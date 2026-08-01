@@ -1,9 +1,9 @@
 {
   "id": "vault-aquarium",
   "name": "Vault Aquarium",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "minAppVersion": "1.5.0",
-  "description": "ヴォルトの色グループ構成を、一匹のベタの姿として表示します。",
+  "description": "A swimming betta fish whose colors reflect the structure of your Obsidian vault.",
   "author": "Ogyanuntius XIII",
   "authorUrl": "https://github.com/OgyanuntiusXIII",
   "isDesktopOnly": false

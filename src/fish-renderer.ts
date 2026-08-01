@@ -148,7 +148,7 @@ export class FishRenderer {
     this.canvasEl.style.left = `${-size * CROP_LEFT}px`;
     this.canvasEl.style.top = `${-size * CROP_TOP}px`;
     // 線画は常に黒・不透明。透明度設定は着色レイヤーだけへ適用する。
-    this.fishButtonEl.style.opacity = "1";
+    this.fishButtonEl.setCssStyles({ opacity: "1" });
     this.canvasEl.style.setProperty("--fish-fill-opacity", `${settings.opacity}`);
     this.fishButtonEl.setAttribute(
       "aria-label",
@@ -459,7 +459,7 @@ export class FishRenderer {
   private applyAppearance(appearance: FishAppearance): void {
     this.canvasEl.style.setProperty("--fish-body", appearance.bodyColor);
     this.canvasEl.style.setProperty("--fish-fin", appearance.finColor);
-    this.canvasEl.style.setProperty("--fish-line", "var(--text-normal)");
+    this.canvasEl.setCssProps({ "--fish-line": "var(--text-normal)" });
     this.canvasEl.style.setProperty(
       "--fish-detail",
       `${appearance.structureDetail}`,
@@ -473,8 +473,10 @@ export class FishRenderer {
     for (const element of this.patternEls) {
       element.style.background = background;
       // 模様PNG自体が完成形なので、量パラメータでは切らず薄めず全表示する。
-      element.style.opacity = "var(--fish-fill-opacity)";
-      element.style.clipPath = "none";
+      element.setCssStyles({
+        opacity: "var(--fish-fill-opacity)",
+        clipPath: "none",
+      });
       element.style.filter = `blur(${appearance.boundarySoftness * 0.55}px)`;
       element.style.backgroundSize = this.patternSize(appearance);
     }

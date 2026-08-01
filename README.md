@@ -1,38 +1,44 @@
 # Vault Aquarium / ヴォルト水槽
 
-ヴォルトの情報構造を、一匹のベタの色と模様に映すObsidianプラグインです。
+Vault Aquarium adds one gently swimming betta fish to Obsidian. Its body, fins, and pattern colors reflect the color-group structure of your vault, turning changes in your notes and links into a slowly evolving appearance.
 
-## 特徴
+## Features
 
-- グラフビューの色グループを取り込み、一致ノート数の上位2色を魚へ反映
-- 1位の色を胴体・ヒレ・胸びれ、2位の色を模様に使用
-- ノートやリンクの変化後、目標の姿へゆっくり変化
-- 画面内を泳ぎ、クリックすると素早く移動。ドラッグで好きな位置へ動かせる
-- 導入時と月ごとの姿・ノート数・リンク数・色割合をローカル保存
-- サイズ、速度、透明度、表示状態を設定可能
+- Shows one animated betta fish over the Obsidian workspace.
+- Uses the leading graph color groups for the fish body, fins, and patterns.
+- Smoothly interpolates appearance changes instead of switching colors immediately.
+- Supports clicking, quick swimming, dragging, hiding, and a status popover.
+- Saves local monthly growth records with note, link, and color-group statistics.
+- Provides Japanese settings for size, speed, opacity, visibility, and graph rules.
 
-## 使い方
+## Privacy
 
-1. プラグインを有効にします。
-2. `設定 → Vault Aquarium → グラフビュー設定を取り込む` を押します。
-3. 魚をクリックすると移動後に「ベタのステータス」「隠す」が表示されます。
+Vault Aquarium does not analyze the meaning of note contents and does not send vault data to external services. Settings and growth records stay in the vault as Obsidian plugin data.
 
-グラフ設定を使わず、`path:開発` や `tag:#TRPG` などのルールを手入力することもできます。上のルールほど優先され、ノートは最初に一致したグループへ入ります。「その他」は統計に残りますが、魚の色には使いません。
+## Usage and limitations
 
-## プライバシー
+Enable the plugin, then open **Settings → Vault Aquarium**. The plugin attempts to read graph color groups from `.obsidian/graph.json`. Because Obsidian does not currently expose graph color groups through a stable public API, compatible manual rules such as `path:Development` and `tag:#TRPG` are also supported.
 
-- ノート本文の意味解析やAI解析は行いません。
-- ファイルパス、タグ、ノート数、リンク構造、グラフ色設定だけをローカルで集計します。
-- データを外部へ送信せず、アカウント登録や外部APIも使用しません。
-- 設定と成長記録はObsidianのプラグインデータとしてヴォルト内に保存します。
+## Manual installation
 
-## 制限事項
+Download `main.js`, `manifest.json`, and `styles.css` from the latest GitHub release and place them in:
 
-Obsidianの公開Plugin APIには、グラフビューの色グループを取得する安定した機能がありません。本プラグインは `.obsidian/graph.json` を読み取ります。内部形式が変更されて取り込めない場合も、手入力ルールは使用できます。
+```text
+<vault>/.obsidian/plugins/vault-aquarium/
+```
 
-日本語UIを前提としています。魚が死ぬ・空腹になるなどのゲーム要素はありません。
+Restart Obsidian, then enable **Vault Aquarium** under Community plugins.
 
-## 開発
+## 日本語
+
+Vault Aquariumは、ヴォルトの色グループ構成を一匹のベタの姿に反映するObsidianプラグインです。魚は画面上をゆっくり泳ぎ、ノートやリンクの変化に合わせて体色・ヒレ色・模様が少しずつ変化します。
+
+- 魚をクリックすると素早く泳ぎ、ステータス・非表示メニューを開きます。
+- ドラッグで好きな位置へ移動できます。
+- ノート本文の意味解析や外部送信は行いません。
+- グラフ色グループを公開APIから直接取得できないため、`.obsidian/graph.json`の読み取りと手動ルールを併用します。
+
+## Development
 
 ```bash
 pnpm install
@@ -40,12 +46,8 @@ pnpm run typecheck
 pnpm run build
 ```
 
-公開版の `main.js` には魚のPNG素材がData URLとして内蔵されます。
+The release `main.js` embeds the fish PNG assets as data URLs.
 
-## 制作者
+## Author and license
 
-[Ogyanuntius XIII](https://github.com/OgyanuntiusXIII)
-
-## ライセンス
-
-[MIT License](LICENSE)
+[Ogyanuntius XIII](https://github.com/OgyanuntiusXIII) · [MIT License](LICENSE)
