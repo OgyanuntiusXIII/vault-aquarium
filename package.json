@@ -1,7 +1,7 @@
 {
   "name": "vault-aquarium",
-  "version": "1.0.2",
-  "description": "A swimming betta fish whose colors reflect the structure of your Obsidian vault.",
+  "version": "1.0.3",
+  "description": "A swimming betta fish whose colors reflect the structure of your vault.",
   "author": "Ogyanuntius XIII",
   "homepage": "https://github.com/OgyanuntiusXIII/vault-aquarium",
   "repository": {
