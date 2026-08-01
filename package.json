@@ -1,0 +1,30 @@
+{
+  "name": "vault-aquarium",
+  "version": "1.0.0",
+  "description": "Obsidianの情報構造をベタの姿に映すコミュニティプラグイン",
+  "author": "Ogyanuntius XIII",
+  "homepage": "https://github.com/OgyanuntiusXIII/vault-aquarium",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OgyanuntiusXIII/vault-aquarium.git"
+  },
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "node esbuild.config.mjs production",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "obsidian",
+    "obsidian-plugin",
+    "vault-aquarium"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "builtin-modules": "^4.0.0",
+    "esbuild": "^0.24.2",
+    "obsidian": "^1.7.2",
+    "typescript": "^5.7.2"
+  }
+}

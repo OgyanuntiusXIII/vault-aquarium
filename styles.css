@@ -1,0 +1,343 @@
+:root {
+  --vault-aquarium-popover-width: 340px;
+}
+
+.vault-aquarium-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  overflow: hidden;
+  pointer-events: none;
+  contain: layout paint;
+}
+
+.vault-aquarium-overlay.is-hidden {
+  display: none;
+}
+
+.vault-aquarium-fish-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: fit-content;
+  height: fit-content;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0 !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: inherit;
+  cursor: grab;
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+  will-change: transform;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.vault-aquarium-fish-button.is-dragging {
+  cursor: grabbing;
+}
+
+.vault-aquarium-fish-button:hover,
+.vault-aquarium-fish-button:active,
+.vault-aquarium-fish-button:focus,
+.vault-aquarium-fish-button:focus-visible {
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.vault-aquarium-fish-button::before,
+.vault-aquarium-fish-button::after {
+  display: none !important;
+  content: none !important;
+}
+
+.vault-aquarium-action-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  background: var(--background-primary);
+  box-shadow: var(--shadow-s);
+  pointer-events: auto;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.vault-aquarium-action-menu.is-open {
+  display: flex;
+}
+
+.vault-aquarium-action-button {
+  height: 28px;
+  padding: 0 9px;
+  border-radius: var(--radius-s);
+  font-size: var(--font-ui-smaller);
+}
+
+.vault-aquarium-action-button.is-primary {
+  color: var(--text-on-accent);
+  background: var(--interactive-accent);
+}
+
+.vault-aquarium-fish-visual {
+  position: relative;
+  overflow: hidden;
+  background: transparent !important;
+  transform-origin: center;
+  /* 折り返し時は回転させず、左右の向きだけを瞬時に切り替える。 */
+  transition: none;
+  will-change: transform;
+}
+
+.vault-aquarium-canvas,
+.vault-aquarium-layer-group,
+.vault-aquarium-layer {
+  position: absolute;
+}
+
+.vault-aquarium-canvas {
+  --fish-body: #4f8fd8;
+  --fish-fin: #78c6d0;
+  --fish-line: var(--text-normal);
+  --fish-detail: 0;
+  --fish-fill-opacity: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.vault-aquarium-layer-group,
+.vault-aquarium-layer {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.vault-aquarium-layer {
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+}
+
+.vault-aquarium-silhouette {
+  background: #000;
+  opacity: 1;
+  filter: drop-shadow(0 0 0.45px #000);
+}
+
+.vault-aquarium-body-base {
+  background: var(--fish-body);
+  opacity: var(--fish-fill-opacity);
+  filter: none;
+}
+
+.vault-aquarium-fins-base {
+  background: var(--fish-body);
+  opacity: var(--fish-fill-opacity);
+  filter: none;
+}
+
+.vault-aquarium-pectoral-base {
+  background: var(--fish-body);
+  opacity: var(--fish-fill-opacity);
+  filter: none;
+}
+
+.vault-aquarium-line {
+  z-index: 20;
+  background: #000;
+  opacity: 1;
+  /* 高解像度の細線を53pxへ縮小しても消えないよう、半ピクセル弱だけ補強する。 */
+  filter:
+    drop-shadow(0.3px 0 0 #000)
+    drop-shadow(-0.3px 0 0 #000)
+    drop-shadow(0 0.3px 0 #000)
+    drop-shadow(0 -0.3px 0 #000);
+}
+
+.vault-aquarium-fins-line-motion {
+  z-index: 20;
+}
+
+.vault-aquarium-pattern {
+  transition: opacity 900ms linear, filter 900ms linear;
+}
+
+.vault-aquarium-fins-motion,
+.vault-aquarium-fins-line-motion {
+  transform-origin: 52% 45%;
+  animation: vault-aquarium-fin-wave 4.8s ease-in-out infinite;
+}
+
+.vault-aquarium-pectoral-motion {
+  transform-origin: 36% 50%;
+  animation: vault-aquarium-pectoral-wave 2.7s ease-in-out infinite;
+}
+
+@keyframes vault-aquarium-fin-wave {
+  0%,
+  100% {
+    transform: rotate(-1.1deg) scaleY(0.975);
+  }
+  50% {
+    transform: rotate(1.3deg) scaleY(1.035);
+  }
+}
+
+@keyframes vault-aquarium-pectoral-wave {
+  0%,
+  100% {
+    transform: rotate(-3.5deg) scaleY(0.96);
+  }
+  50% {
+    transform: rotate(5deg) scaleY(1.06);
+  }
+}
+
+.vault-aquarium-fish-button.is-darting .vault-aquarium-fins-motion,
+.vault-aquarium-fish-button.is-darting .vault-aquarium-fins-line-motion {
+  animation-duration: 0.48s;
+}
+
+.vault-aquarium-fish-button.is-darting .vault-aquarium-pectoral-motion {
+  animation-duration: 0.32s;
+}
+
+.vault-aquarium-fish-button.is-dragging .vault-aquarium-fins-motion,
+.vault-aquarium-fish-button.is-dragging .vault-aquarium-fins-line-motion {
+  animation-duration: 0.65s;
+}
+
+.vault-aquarium-fish-button.is-dragging .vault-aquarium-pectoral-motion {
+  animation-duration: 0.42s;
+}
+
+.vault-aquarium-popover {
+  position: fixed;
+  z-index: 1000;
+  max-height: min(440px, calc(100vh - 24px));
+  padding: 16px;
+  overflow: auto;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  background: var(--background-primary);
+  box-shadow: var(--shadow-l);
+  color: var(--text-normal);
+  font-size: var(--font-ui-small);
+}
+
+.vault-aquarium-popover h3,
+.vault-aquarium-popover h4,
+.vault-aquarium-popover p {
+  margin-block: 0 10px;
+}
+
+.vault-aquarium-popover h4 {
+  margin-top: 16px;
+}
+
+.vault-aquarium-popover ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.vault-aquarium-summary {
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.vault-aquarium-mapping {
+  display: grid;
+  gap: 7px;
+}
+
+.vault-aquarium-mapping-row,
+.vault-aquarium-record-colors > span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.vault-aquarium-color-swatch,
+.vault-aquarium-rule-swatch {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 13px;
+  height: 13px;
+  border: 1px solid rgb(127 127 127 / 42%);
+  border-radius: 50%;
+}
+
+.vault-aquarium-popover-meta {
+  margin-top: 12px !important;
+  color: var(--text-faint);
+}
+
+.vault-aquarium-growth-list {
+  display: grid;
+  gap: 12px;
+}
+
+.vault-aquarium-growth-item {
+  padding: 12px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  background: var(--background-secondary);
+}
+
+.vault-aquarium-growth-item h3,
+.vault-aquarium-growth-item p {
+  margin-block: 0 8px;
+}
+
+.vault-aquarium-record-colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.vault-aquarium-rule-list .setting-item {
+  align-items: center;
+}
+
+.vault-aquarium-rule-swatch {
+  margin-left: 8px;
+  vertical-align: -2px;
+}
+
+@media (max-width: 600px) {
+  .vault-aquarium-overlay {
+    z-index: 10;
+  }
+
+  .vault-aquarium-popover {
+    max-height: calc(100vh - 24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vault-aquarium-fins-motion,
+  .vault-aquarium-fins-line-motion,
+  .vault-aquarium-pectoral-motion {
+    animation: none;
+  }
+
+  .vault-aquarium-fish-visual,
+  .vault-aquarium-pattern {
+    transition: none;
+  }
+}
