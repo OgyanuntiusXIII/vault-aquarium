@@ -139,7 +139,8 @@ export class FishRenderer {
 
   applySettings(settings: VaultAquariumSettings): void {
     this.settings = settings;
-    const size = Math.min(settings.fishSize, window.innerWidth * 0.72);
+    const { width: viewportWidth } = this.getViewportSize();
+    const size = Math.min(settings.fishSize, viewportWidth * 0.72);
     this.visualEl.style.width = `${size}px`;
     this.visualEl.style.height = `${size * (1316 / 1753)}px`;
     this.canvasEl.style.width = `${size * CANVAS_TO_CROP_WIDTH}px`;
@@ -225,11 +226,13 @@ export class FishRenderer {
 
     const width = this.visualEl.getBoundingClientRect().width;
     const height = this.visualEl.getBoundingClientRect().height;
-    this.x = clamp(drag.startX + deltaX, 16, window.innerWidth - width - 16);
+    const { width: viewportWidth, height: viewportHeight } =
+      this.getViewportSize();
+    this.x = clamp(drag.startX + deltaX, 16, viewportWidth - width - 16);
     this.baseY = clamp(
       drag.startY + deltaY,
       72,
-      window.innerHeight - height - 24,
+      viewportHeight - height - 24,
     );
     const horizontalStep = event.clientX - drag.lastClientX;
     if (Math.abs(horizontalStep) >= 0.5) {
@@ -276,15 +279,17 @@ export class FishRenderer {
     this.onDartStart();
     const size = this.visualEl.getBoundingClientRect().width;
     const height = this.visualEl.getBoundingClientRect().height;
+    const { width: viewportWidth, height: viewportHeight } =
+      this.getViewportSize();
     const minimumX = 16;
-    const maximumX = Math.max(minimumX, window.innerWidth - size - 16);
-    const maximumY = Math.max(72, window.innerHeight - height - 24);
+    const maximumX = Math.max(minimumX, viewportWidth - size - 16);
+    const maximumY = Math.max(72, viewportHeight - height - 24);
     const midpointX = (minimumX + maximumX) / 2;
     const targetX =
       this.x < midpointX
         ? minimumX + (maximumX - minimumX) * 0.78
         : minimumX + (maximumX - minimumX) * 0.16;
-    const verticalShift = this.baseY < window.innerHeight / 2 ? 120 : -120;
+    const verticalShift = this.baseY < viewportHeight / 2 ? 120 : -120;
     const targetY = clamp(this.baseY + verticalShift, 72, maximumY);
     this.direction = targetX > this.x ? 1 : -1;
     this.dartMotion = {
@@ -384,10 +389,12 @@ export class FishRenderer {
 
   private moveFish(now: number, deltaMs: number): void {
     const size = this.visualEl.getBoundingClientRect().width;
+    const { width: viewportWidth, height: viewportHeight } =
+      this.getViewportSize();
     const minimumX = 16;
-    const maximumX = Math.max(minimumX, window.innerWidth - size - 16);
+    const maximumX = Math.max(minimumX, viewportWidth - size - 16);
     const height = this.visualEl.getBoundingClientRect().height;
-    const maxY = Math.max(72, window.innerHeight - height - 24);
+    const maxY = Math.max(72, viewportHeight - height - 24);
     if (this.dartMotion) {
       const progress = clamp(
         (now - this.dartMotion.startedAt) / this.dartMotion.duration,
@@ -431,15 +438,22 @@ export class FishRenderer {
       const menuX = clamp(
         this.x + size / 2 - menuWidth / 2,
         8,
-        window.innerWidth - menuWidth - 8,
+        viewportWidth - menuWidth - 8,
       );
       const belowY = renderedY + height + 8;
       const menuY =
-        belowY + menuHeight <= window.innerHeight - 8
+        belowY + menuHeight <= viewportHeight - 8
           ? belowY
           : Math.max(8, renderedY - menuHeight - 8);
       this.actionMenuEl.style.transform = `translate3d(${menuX}px, ${menuY}px, 0)`;
     }
+  }
+
+  private getViewportSize(): { width: number; height: number } {
+    return {
+      width: this.overlayEl.clientWidth || window.innerWidth,
+      height: this.overlayEl.clientHeight || window.innerHeight,
+    };
   }
 
   private applyAppearance(appearance: FishAppearance): void {

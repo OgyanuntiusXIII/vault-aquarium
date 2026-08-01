@@ -11,6 +11,15 @@
   contain: layout paint;
 }
 
+/*
+ * Frameless desktop windows reserve the top header as the native drag region.
+ * A full-screen fixed layer can block that region even with pointer-events:none,
+ * so the aquarium starts below Obsidian's title bar.
+ */
+body:not(.is-mobile) .vault-aquarium-overlay {
+  top: var(--header-height, 40px);
+}
+
 .vault-aquarium-overlay.is-hidden {
   display: none;
 }
