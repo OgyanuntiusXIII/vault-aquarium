@@ -31,9 +31,9 @@
 
 - [x] タイトルバーのウィンドウ移動をMyBrainで動作確認
 - [x] manifest.jsonとpackage.jsonのバージョンが1.0.1
-- [ ] GitHub Releaseのタグが正確に `1.0.1`
-- [ ] main.js、manifest.json、styles.cssをReleaseへ添付
-- [ ] Release添付のmanifest.jsonも1.0.1
+- [x] GitHub Releaseのタグが正確に `1.0.1`
+- [x] main.js、manifest.json、styles.cssをReleaseへ添付
+- [x] Release添付のmanifest.jsonも1.0.1
 
 ## 品質
 
