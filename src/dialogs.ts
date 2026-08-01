@@ -72,7 +72,7 @@ export class FishInfoPopover {
     const rect = anchor.getBoundingClientRect();
     const width = Math.min(340, window.innerWidth - 24);
     element.style.width = `${width}px`;
-    element.style.visibility = "hidden";
+    element.setCssStyles({ visibility: "hidden" });
     let left = Math.min(
       window.innerWidth - width - 12,
       Math.max(12, rect.left + rect.width / 2 - width / 2),
@@ -99,7 +99,7 @@ export class FishInfoPopover {
     }
     element.style.left = `${left}px`;
     element.style.top = `${Math.max(12, top)}px`;
-    element.style.visibility = "visible";
+    element.setCssStyles({ visibility: "visible" });
 
     const outside = (event: PointerEvent): void => {
       if (
