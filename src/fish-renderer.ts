@@ -2,7 +2,6 @@ import type { FishAppearance, VaultAquariumSettings } from "./types";
 import { clamp, copyAppearance, lerpAppearance } from "./utils";
 
 export interface FishAssetUrls {
-  silhouette: string;
   bodyBase: string;
   bodyLine: string;
   finsBase: string;
@@ -35,10 +34,12 @@ interface DragState {
 
 const APPEARANCE_TIME_CONSTANT_MS = 6 * 60 * 60 * 1000;
 const DRAG_THRESHOLD_PX = 5;
-const CANVAS_TO_CROP_WIDTH = 3489 / 1753;
-const CANVAS_TO_CROP_HEIGHT = 2617 / 1753;
-const CROP_LEFT = 809 / 1753;
-const CROP_TOP = 620 / 1753;
+// 素材PNGは実魚領域(1753x1316)へクロップ済みなので、キャンバスは表示枠と一致する。
+// 旧素材(3489x2617・余白込み)時代はここでオフセットしてクロップしていた。
+const CANVAS_TO_CROP_WIDTH = 1;
+const CANVAS_TO_CROP_HEIGHT = 1316 / 1753;
+const CROP_LEFT = 0;
+const CROP_TOP = 0;
 
 export class FishRenderer {
   private readonly overlayEl: HTMLDivElement;
@@ -304,11 +305,6 @@ export class FishRenderer {
   }
 
   private buildLayers(assets: FishAssetUrls): void {
-    this.addMaskLayer(this.canvasEl, assets.silhouette, [
-      "vault-aquarium-layer",
-      "vault-aquarium-silhouette",
-    ]);
-
     const finsMotion = this.canvasEl.createDiv({
       cls: "vault-aquarium-layer-group vault-aquarium-fins-motion",
     });

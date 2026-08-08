@@ -1,4 +1,3 @@
-import silhouette from "../assets/fish/betta/00_silhouette.png";
 import bodyBase from "../assets/fish/betta/10_body_base.png";
 import bodyLine from "../assets/fish/betta/11_body_line.png";
 import finsBase from "../assets/fish/betta/20_fins_base.png";
@@ -10,7 +9,6 @@ import type { FishAssetUrls } from "./fish-renderer";
 
 /** 公式配布が取得するmain.jsだけで描画できるよう、PNGをData URLとしてバンドルする。 */
 export const BETTA_ASSET_URLS: FishAssetUrls = {
-  silhouette,
   bodyBase,
   bodyLine,
   finsBase,

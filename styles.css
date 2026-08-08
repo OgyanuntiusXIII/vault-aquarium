@@ -142,12 +142,6 @@ body:not(.is-mobile) .vault-aquarium-overlay {
   -webkit-mask-size: 100% 100%;
 }
 
-.vault-aquarium-silhouette {
-  background: #000;
-  opacity: 1;
-  filter: drop-shadow(0 0 0.45px #000);
-}
-
 .vault-aquarium-body-base {
   background: var(--fish-body);
   opacity: var(--fish-fill-opacity);
@@ -186,14 +180,18 @@ body:not(.is-mobile) .vault-aquarium-overlay {
   transition: opacity 900ms linear, filter 900ms linear;
 }
 
+/*
+ * 素材を実魚領域へクロップしたぶん、揺れの支点をクロップ後の座標系へ読み替える。
+ * 旧: 52% 45% / 36% 50%（3489x2617のキャンバス基準）
+ */
 .vault-aquarium-fins-motion,
 .vault-aquarium-fins-line-motion {
-  transform-origin: 52% 45%;
+  transform-origin: 57.35% 42.37%;
   animation: vault-aquarium-fin-wave 4.8s ease-in-out infinite;
 }
 
 .vault-aquarium-pectoral-motion {
-  transform-origin: 36% 50%;
+  transform-origin: 25.5% 52.32%;
   animation: vault-aquarium-pectoral-wave 2.7s ease-in-out infinite;
 }
 
